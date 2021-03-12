@@ -26,7 +26,8 @@
   <!-- /.login-logo -->
   <div class="card">
 
-    {{-- content --}}
+    @include('sweetalert::alert')
+
     @yield('content')
 
   </div>
