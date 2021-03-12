@@ -1,17 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('checklogin');
-    }
-
     public function index()
     {
         echo Auth::user()->name;

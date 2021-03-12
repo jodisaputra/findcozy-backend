@@ -17,9 +17,13 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
+Route::middleware(['checklogin', 'checkrole'])->group(function () {
+    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+    Route::get('/logout', 'AuthController@logout')->name('logout');
+});
+
 Route::get('/', 'AuthController@login');
 Route::post('login', 'AuthController@authenticate')->name('login');
 Route::get('/register', 'AuthController@register')->name('register');
 Route::post('/storeuser', 'AuthController@storeUser')->name('auth.store');
 
-Route::get('/dashboard', 'DashboardController@index')->name('dashboard');

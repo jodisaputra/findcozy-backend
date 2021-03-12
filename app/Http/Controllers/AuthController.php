@@ -18,7 +18,19 @@ class AuthController extends Controller
 
     public function authenticate(Request $request)
     {
-        echo 'tes';
+        $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string'
+        ]);
+
+        $credentials = $request->only('email', 'password');
+
+        if(Auth::attempt($credentials))
+        {
+            return redirect()->route('dashboard');
+        }
+        Alert::toast('Oppes! You have entered invalid credentials', 'error');
+        return redirect('/');
     }
 
     public function register()
@@ -61,6 +73,13 @@ class AuthController extends Controller
         $user->save();
         Alert::toast('User successfully registered !', 'success');
 
+        return redirect('/');
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        Alert::toast('Logout Successfully', 'success');
         return redirect('/');
     }
 }

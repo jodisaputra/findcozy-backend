@@ -2,11 +2,11 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Support\Facades\Auth;
 use Closure;
+use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class CheckLogin
+class CheckRole
 {
     /**
      * Handle an incoming request.
@@ -17,11 +17,11 @@ class CheckLogin
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::user())
+        if(Auth::user()->roles == 'adminkost')
         {
             return $next($request);
         }
-        Alert::toast('Please login !', 'error');
+        Alert::toast('You dont have any access !', 'error');
         return redirect('/');
     }
 }
