@@ -20,10 +20,16 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['checklogin', 'checkrole'])->group(function () {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
     Route::get('/logout', 'AuthController@logout')->name('logout');
+
+    // Kos
+    Route::resource('boardinghouse', 'BoardingHouseController');
 });
 
-Route::get('/', 'AuthController@login');
-Route::post('login', 'AuthController@authenticate')->name('login');
-Route::get('/register', 'AuthController@register')->name('register');
-Route::post('/storeuser', 'AuthController@storeUser')->name('auth.store');
+Route::middleware(['guest'])->group(function () {
+    Route::get('/', 'AuthController@login');
+    Route::post('login', 'AuthController@authenticate')->name('login');
+    Route::get('/register', 'AuthController@register')->name('register');
+    Route::post('/storeuser', 'AuthController@storeUser')->name('auth.store');
+});
+
 
