@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Boarding House')
+@section('title', 'Boarding House Image')
 
 @section('content')
 <div class="content-header">
@@ -19,42 +19,29 @@
           <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <a href="{{ route('boardinghouse.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Add New</a>
+                    <a href="{{ route('boardinghouse.index') }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Go Back</a>
+                    <a href="{{ route('boardinghouseimage.create', $boardinghouse_id) }}" class="btn btn-primary"><i class="fas fa-plus"></i> Add New</a>
                 </div>
                 <div class="card-body">
-                    <table id="table-1" class="table table-bordered table-hover">
+                    <table id="table-2" class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Address</th>
-                                <th>Map Url</th>
-                                <th>City</th>
+                                <th>Image</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($boardinghouses as $b)
+                            @foreach ($boardinghouseimages as $b)
                                 <tr>
-                                   <td>{{ $b->name }}</td>
-                                   <td>{{ $b->address }}</td>
+                                   <td><img src="{{ Storage::url($b->image) }}" alt="Image" style="width: 40%;"></td>
                                    <td>
-                                        @if ($b->map_url != NULL || $b->map_url != '')
-                                            <a href="{{ $b->map_url }}" target="_BLANK">Map Url</a>
-                                        @else
+                                       <a href="{{ route('boardinghouseimage.edit', [$b->id, $boardinghouse_id]) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
 
-                                        @endif
-                                   </td>
-                                   <td>{{ $b->city }}</td>
-                                   <td>
-                                       <a href="{{ route('boardinghouse.edit', $b->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
-
-                                       <form action="{{ route('boardinghouse.destroy', $b->id) }}" class="d-inline" method="POST">
+                                       <form action="{{ route('boardinghouseimage.destroy', [$b->id, $boardinghouse_id]) }}" class="d-inline" method="POST">
                                            @csrf
                                            @method('DELETE')
                                            <button type="submit" onclick="return confirm('Are you sure ?')" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Delete</button>
                                        </form>
-
-                                       <a href="{{ route('boardinghouseimage.index', $b->id) }}" class="btn btn-info btn-sm"><i class="fas fa-image"></i> See Images</a>
                                    </td>
                                 </tr>
                             @endforeach
@@ -70,7 +57,7 @@
 
 @push('script-down')
 <script>
-    $('#table-1').DataTable({
+    $('#table-2').DataTable({
       "paging": true,
       "lengthChange": false,
       "searching": false,

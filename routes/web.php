@@ -23,6 +23,13 @@ Route::middleware(['checklogin', 'checkrole'])->group(function () {
 
     // Kos
     Route::resource('boardinghouse', 'BoardingHouseController');
+    // gambar kos
+    Route::get('boardinghouseimage/{boardinghouse}', 'BoardingHouseImageController@index')->name('boardinghouseimage.index');
+    Route::get('boardinghouseimage/create/{boardinghouse}', 'BoardingHouseImageController@create')->name('boardinghouseimage.create');
+    Route::post('boardinghouseimage/store', 'BoardingHouseImageController@store')->name('boardinghouseimage.store');
+    Route::get('boardinghouseimage/edit/{boardinghouseimage}/{boardinghouse}', 'BoardingHouseImageController@edit')->name('boardinghouseimage.edit');
+    Route::put('boardinghouseimage/update/{boardinghouseimage}', 'BoardingHouseImageController@update')->name('boardinghouseimage.update');
+    Route::delete('boardinghouseimage/delete/{boardinghouseimage}/{boardinghouse}', 'BoardingHouseImageController@destroy')->name('boardinghouseimage.destroy');
 });
 
 Route::middleware(['guest'])->group(function () {

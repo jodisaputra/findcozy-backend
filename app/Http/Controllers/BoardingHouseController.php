@@ -111,7 +111,6 @@ class BoardingHouseController extends Controller
             'type' => 'edit',
             'url' => route('boardinghouse.update', $boardinghouse->id),
             'title' => $title,
-            'boardinghouse' => $boardinghouse,
             'name' => old('name', $boardinghouse->name),
             'address' => old('address', $boardinghouse->address),
             'city' => old('city', $boardinghouse->city),

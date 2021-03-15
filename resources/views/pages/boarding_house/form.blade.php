@@ -74,7 +74,7 @@
                             <label>Business License</label>
                             <input type="file" class="form-control @error('license') is-invalid @enderror" name="license">
 
-                            @if ($tipe = 'edit')
+                            @if ($type == 'edit')
                                 <a href="{{ Storage::url($license) }}" class="mt-2" target="_BLANK">See Document</a>
                             @endif
 
