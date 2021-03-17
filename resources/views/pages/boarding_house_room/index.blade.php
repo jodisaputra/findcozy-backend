@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Boarding House')
+@section('title', 'Boarding House Room')
 
 @section('content')
 <div class="content-header">
@@ -19,44 +19,43 @@
           <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <a href="{{ route('boardinghouse.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Add New</a>
+                    <a href="{{ route('boardinghouse.index') }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Go Back</a>
+                    <a href="{{ route('boardinghouseroom.create', $boardinghouse_id) }}" class="btn btn-primary"><i class="fas fa-plus"></i> Add New</a>
                 </div>
                 <div class="card-body">
-                    <table id="table-1" class="table table-bordered table-hover">
+                    <table id="table-2" class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Address</th>
-                                <th>Map Url</th>
-                                <th>City</th>
+                                <th>Room name</th>
+                                <th>Status</th>
+                                <th>Price</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($boardinghouses as $b)
+                            @foreach ($boardinghouserooms as $b)
                                 <tr>
-                                   <td>{{ $b->name }}</td>
-                                   <td>{{ $b->address }}</td>
                                    <td>
-                                        @if ($b->map_url != NULL || $b->map_url != '')
-                                            <a href="{{ $b->map_url }}" target="_BLANK">Map Url</a>
-                                        @else
-
-                                        @endif
+                                       {{ $b->name }}
                                    </td>
-                                   <td>{{ $b->city }}</td>
                                    <td>
-                                       <a href="{{ route('boardinghouse.edit', $b->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
+                                       @if ($b->status == 'available')
+                                           <span class="badge bg-success">Available</span>
+                                       @elseif ($b->status == 'not_available')
+                                           <span class="badge bg-danger">Not Available</span>
+                                       @endif
+                                   </td>
+                                   <td>
+                                      IDR. {{ number_format($b->price, 2, ',','.') }}
+                                   </td>
+                                   <td>
+                                       <a href="{{ route('boardinghouseroom.edit', [$b->id, $boardinghouse_id]) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
 
-                                       <form action="{{ route('boardinghouse.destroy', $b->id) }}" class="d-inline" method="POST">
+                                       <form action="{{ route('boardinghouseroom.destroy', [$b->id, $boardinghouse_id]) }}" class="d-inline" method="POST">
                                            @csrf
                                            @method('DELETE')
                                            <button type="submit" onclick="return confirm('Are you sure ?')" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Delete</button>
                                        </form>
-
-                                       <a href="{{ route('boardinghouseimage.index', $b->id) }}" class="btn btn-info btn-sm"><i class="fas fa-image"></i> See Images</a>
-
-                                       <a href="{{ route('boardinghouseroom.index', $b->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-door-open"></i> See Rooms</a>
                                    </td>
                                 </tr>
                             @endforeach
@@ -72,7 +71,7 @@
 
 @push('script-down')
 <script>
-    $('#table-1').DataTable({
+    $('#table-2').DataTable({
       "paging": true,
       "lengthChange": false,
       "searching": false,

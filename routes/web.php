@@ -30,6 +30,13 @@ Route::middleware(['checklogin', 'checkrole'])->group(function () {
     Route::get('boardinghouseimage/edit/{boardinghouseimage}/{boardinghouse}', 'BoardingHouseImageController@edit')->name('boardinghouseimage.edit');
     Route::put('boardinghouseimage/update/{boardinghouseimage}', 'BoardingHouseImageController@update')->name('boardinghouseimage.update');
     Route::delete('boardinghouseimage/delete/{boardinghouseimage}/{boardinghouse}', 'BoardingHouseImageController@destroy')->name('boardinghouseimage.destroy');
+    //kamar kos
+    Route::get('boardinghouseroom/{boardinghouse}', 'BoardingRoomController@index')->name('boardinghouseroom.index');
+    Route::get('boardinghouseroom/create/{boardinghouse}', 'BoardingRoomController@create')->name('boardinghouseroom.create');
+    Route::post('boardinghouseroom/store', 'BoardingRoomController@store')->name('boardinghouseroom.store');
+    Route::get('boardinghouseroom/edit/{boardinghouseroom}/{boardinghouse}', 'BoardingRoomController@edit')->name('boardinghouseroom.edit');
+    Route::put('boardinghouseroom/update/{boardinghouseroom}', 'BoardingRoomController@update')->name('boardinghouseroom.update');
+    Route::delete('boardinghouseroom/delete/{boardinghouseroom}/{boardinghouse}', 'BoardingRoomController@destroy')->name('boardinghouseroom.destroy');
 });
 
 Route::middleware(['guest'])->group(function () {

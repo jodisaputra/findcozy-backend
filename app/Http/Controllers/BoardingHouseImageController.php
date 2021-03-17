@@ -19,7 +19,7 @@ class BoardingHouseImageController extends Controller
     public function index($id)
     {
         $house = BoardingHouse::findOrFail($id);
-        $title = 'List of Images ' . $house->name;
+        $title = 'List of Rooms ' . $house->name;
         $boardinghouseimage = BoardingHouseImage::where('boarding_house_id', $id)->get();
         return view('pages.boarding_house_image.index')->with([
             'title' => $title,
