@@ -23,6 +23,7 @@ class CreateBoardingHousesTable extends Migration
             $table->string('license');
             $table->timestamps();
         });
+
         Schema::table('boarding_houses', function(Blueprint $table){
             $table->foreign('user_id')->references('id')->on('users');
          });

@@ -37,6 +37,13 @@ Route::middleware(['checklogin', 'checkrole'])->group(function () {
     Route::get('boardinghouseroom/edit/{boardinghouseroom}/{boardinghouse}', 'BoardingRoomController@edit')->name('boardinghouseroom.edit');
     Route::put('boardinghouseroom/update/{boardinghouseroom}', 'BoardingRoomController@update')->name('boardinghouseroom.update');
     Route::delete('boardinghouseroom/delete/{boardinghouseroom}/{boardinghouse}', 'BoardingRoomController@destroy')->name('boardinghouseroom.destroy');
+    // facilities
+    Route::get('facilities/{boardinghouse}', 'FacilitiesController@index')->name('facilities.index');
+    Route::get('facilities/create/{boardinghouse}', 'FacilitiesController@create')->name('facilities.create');
+    Route::post('facilities/store', 'FacilitiesController@store')->name('facilities.store');
+    Route::get('facilities/edit/{facilities}/{boardinghouse}', 'FacilitiesController@edit')->name('facilities.edit');
+    Route::put('facilities/update/{facilities}', 'FacilitiesController@update')->name('facilities.update');
+    Route::delete('facilities/delete/{facilities}/{boardinghouse}', 'FacilitiesController@destroy')->name('facilities.destroy');
 });
 
 Route::middleware(['guest'])->group(function () {

@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\BoardingRoom;
+use App\Facilities;
 use App\BoardingHouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Storage;
 
-class BoardingRoomController extends Controller
+class FacilitiesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,11 +19,11 @@ class BoardingRoomController extends Controller
     public function index($id)
     {
         $house = BoardingHouse::findOrFail($id);
-        $title = 'List of Rooms ' . $house->name;
-        $boardinghouseroom = BoardingRoom::where('boarding_house_id', $id)->get();
-        return view('pages.boarding_house_room.index')->with([
+        $title = 'List of Facilities ' . $house->name;
+        $facilities = Facilities::where('boarding_house_id', $id)->get();
+        return view('pages.facilities.index')->with([
             'title' => $title,
-            'boardinghouserooms' => $boardinghouseroom,
+            'facilities' => $facilities,
             'boardinghouse_id' => $id
         ]);
     }
@@ -36,15 +36,13 @@ class BoardingRoomController extends Controller
     public function create($id)
     {
         $house = BoardingHouse::findOrFail($id);
-        $title = 'Add new room ' . $house->name;
-        return view('pages.boarding_house_room.form')->with([
+        $title = 'Add new Facilities ' . $house->name;
+        return view('pages.facilities.form')->with([
             'type' => 'add',
-            'url' => route('boardinghouseroom.store'),
+            'url' => route('facilities.store'),
             'title' => $title,
-            'boardinghouse_id' => $id,
-            'name' => old('name'),
-            'status' => old('status'),
-            'price' => old('price')
+            'facility_name' => old('facility_name'),
+            'boardinghouse_id' => $id
         ]);
     }
 
@@ -57,9 +55,7 @@ class BoardingRoomController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'name' => 'required|max:255',
-            'status' => 'required',
-            'price' => 'required|numeric',
+            'facility_name' => 'required|max:255',
         ]);
 
         if($validator->fails())
@@ -67,25 +63,24 @@ class BoardingRoomController extends Controller
             return redirect()->back()->withErrors($validator)->withInput($request->all());
         }
 
-        $boardingroom = new BoardingRoom;
+        $facilities = new Facilities;
 
-        $boardingroom->boarding_house_id = $request->boardinghouse_id;
-        $boardingroom->name = $request->name;
-        $boardingroom->status = $request->status;
-        $boardingroom->price = $request->price;
-        $boardingroom->save();
+        $facilities->facility_name = $request->facility_name;
+        $facilities->boarding_house_id = $request->boardinghouse_id;
+
+        $facilities->save();
 
         Alert::toast('Data saved successfully !', 'success');
-        return redirect()->route('boardinghouseroom.index', $request->boardinghouse_id);
+        return redirect()->route('facilities.index', $request->boardinghouse_id);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\BoardingRoom  $boardingRoom
+     * @param  \App\Facilities  $facilities
      * @return \Illuminate\Http\Response
      */
-    public function show(BoardingRoom $boardingRoom)
+    public function show(Facilities $facilities)
     {
         //
     }
@@ -93,21 +88,19 @@ class BoardingRoomController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\BoardingRoom  $boardingRoom
+     * @param  \App\Facilities  $facilities
      * @return \Illuminate\Http\Response
      */
     public function edit($id, $boardinghouse_id)
     {
-        $boardingroom = BoardingRoom::findOrFail($id);
-        $title = 'Edit Boarding Room';
-        return view('pages.boarding_house_room.form')->with([
+        $facilities = Facilities::findOrFail($id);
+        $title = 'Edit Facility';
+        return view('pages.facilities.form')->with([
             'type' => 'edit',
-            'url' => route('boardinghouseroom.update', $boardingroom->id),
+            'url' => route('facilities.update', $facilities->id),
             'title' => $title,
             'boardinghouse_id' => $boardinghouse_id,
-            'name' => old('name', $boardingroom->name),
-            'status' => old('status', $boardingroom->status),
-            'price' => old('price', $boardingroom->price)
+            'facility_name' => old('facility_name', $facilities->facility_name),
         ]);
     }
 
@@ -115,15 +108,13 @@ class BoardingRoomController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\BoardingRoom  $boardingRoom
+     * @param  \App\Facilities  $facilities
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(),[
-            'name' => 'required|max:255',
-            'status' => 'required',
-            'price' => 'required|numeric',
+            'facility_name' => 'required|max:255',
         ]);
 
         if($validator->fails())
@@ -131,30 +122,28 @@ class BoardingRoomController extends Controller
             return redirect()->back()->withErrors($validator)->withInput($request->all());
         }
 
-        $boardingroom = BoardingRoom::find($id);
+        $facilities = Facilities::find($id);
 
-        $boardingroom->boarding_house_id = $request->boardinghouse_id;
-        $boardingroom->name = $request->name;
-        $boardingroom->status = $request->status;
-        $boardingroom->price = $request->price;
-        $boardingroom->save();
+        $facilities->boarding_house_id = $request->boardinghouse_id;
+        $facilities->facility_name = $request->facility_name;
+        $facilities->save();
 
         Alert::toast('Data updated successfully !', 'success');
-        return redirect()->route('boardinghouseroom.index', $request->boardinghouse_id);
+        return redirect()->route('facilities.index', $request->boardinghouse_id);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\BoardingRoom  $boardingRoom
+     * @param  \App\Facilities  $facilities
      * @return \Illuminate\Http\Response
      */
     public function destroy($id, $boardinghouse_id)
     {
-        $boardingroom = BoardingRoom::findOrFail($id);
+        $facilities = Facilities::findOrFail($id);
 
-        $boardingroom->delete();
+        $facilities->delete();
         Alert::toast('Data delete successfully !', 'success');
-        return redirect()->route('boardinghouseroom.index', $boardinghouse_id);
+        return redirect()->route('facilities.index', $boardinghouse_id);
     }
 }
