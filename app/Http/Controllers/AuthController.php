@@ -46,7 +46,7 @@ class AuthController extends Controller
             'password' => 'required|string|min:8|confirmed',
             'password_confirmation' => 'required',
             'gender' => 'required',
-            'profile_photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'profile_photo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'phone_number' => 'required|string'
         ]);
 
