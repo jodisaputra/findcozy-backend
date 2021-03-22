@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->enum('roles', ['adminkost', 'user']);
             $table->string('phone_number', 12);
-            $table->string('profile_photo');
+            $table->string('profile_photo')->nullable();
             $table->enum('gender', ['male', 'female']);
             $table->rememberToken();
             $table->timestamps();

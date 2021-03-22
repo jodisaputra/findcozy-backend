@@ -63,6 +63,12 @@ class LoginController extends Controller
         if(Auth::attempt($credentials))
         {
             $user = $request->user();
+
+            if($user->roles != 'user')
+            {
+                return response('You dont have any Access !', 401);
+            }
+
             return $this->getResponse($user);
         }
     }
@@ -76,6 +82,15 @@ class LoginController extends Controller
     public function user(Request $request)
     {
         return $request->user();
+    }
+
+    public function updateprofile(Request $request)
+    {
+        $data = $request->all();
+
+        $user = $request->user();
+        $user->update($data);
+        return response('success update', 200);
     }
 
     private function getResponse(User $user)
