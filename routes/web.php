@@ -44,6 +44,8 @@ Route::middleware(['checklogin', 'checkrole'])->group(function () {
     Route::get('facilities/edit/{facilities}/{boardinghouse}', 'FacilitiesController@edit')->name('facilities.edit');
     Route::put('facilities/update/{facilities}', 'FacilitiesController@update')->name('facilities.update');
     Route::delete('facilities/delete/{facilities}/{boardinghouse}', 'FacilitiesController@destroy')->name('facilities.destroy');
+    // review
+    Route::get('review/{boardinghouse}', 'ReviewController@index')->name('review.index');
 });
 
 Route::middleware(['guest'])->group(function () {

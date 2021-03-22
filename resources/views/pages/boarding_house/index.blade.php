@@ -60,6 +60,8 @@
                                        <a href="{{ route('boardinghouseroom.index', $b->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-door-open"></i> See Rooms</a>
 
                                        <a href="{{ route('facilities.index', $b->id) }}" class="btn btn-secondary btn-sm"><i class="fas fa-faucet"></i> Facilities</a>
+
+                                       <a href="{{ route('review.index', $b->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-comment"></i> Review</a>
                                    </td>
                                 </tr>
                             @endforeach

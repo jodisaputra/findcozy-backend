@@ -7,8 +7,6 @@ use App\BoardingHouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Support\Facades\Storage;
-
 class BoardingRoomController extends Controller
 {
     /**
