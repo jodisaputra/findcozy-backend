@@ -15,4 +15,9 @@ class BoardingHouse extends Model
         'city',
         'license',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
