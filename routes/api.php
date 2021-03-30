@@ -18,15 +18,17 @@ Route::prefix('auth')->group(function () {
     Route::post('/register', 'API\LoginController@register');
     Route::post('/login', 'API\LoginController@login');
 
-    Route::get('/logout', 'API\LoginController@logout')->middleware('login_api');
-    Route::get('/user', 'API\LoginController@user')->middleware('login_api');
-    Route::post('/profile', 'API\LoginController@updateprofile')->middleware('login_api');
-    // kost
-    Route::get('boardinghouses', 'API\BoardingHouseController@index')->middleware('login_api');
-    //kamar kost
-    Route::get('boardingrooms', 'API\BoardingRoomController@index')->middleware('login_api');
+    Route::get('/logout', 'API\LoginController@logout')->middleware('auth:api');
+    Route::get('/user', 'API\LoginController@user')->middleware('auth:api');
+    Route::post('/profile', 'API\LoginController@updateprofile')->middleware('auth:api');
 });
-
-Route::get('boardingimages', 'API\BoardingHouseImageController@index');
+// kost
+Route::get('boardinghouses', 'API\BoardingHouseController@index')->middleware('auth:api');
+//kamar kost
+Route::get('boardingrooms', 'API\BoardingRoomController@index')->middleware('auth:api');
+// gambar kost
+Route::get('boardingimages', 'API\BoardingHouseImageController@index')->middleware('auth:api');
+//favourite
+Route::get('favourites', 'API\FavouriteController@index')->middleware('auth:api');
 
 

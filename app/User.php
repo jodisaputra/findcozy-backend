@@ -6,6 +6,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use App\Favourite;
+use App\Review;
 
 class User extends Authenticatable
 {
@@ -46,6 +48,11 @@ class User extends Authenticatable
 
     public function review()
     {
-        return $this->hasMany('App\Review');
+        return $this->hasMany(Review::class, 'user_id');
+    }
+
+    public function favourites()
+    {
+        return $this->hasMany(Favourite::class,'user_id');
     }
 }
