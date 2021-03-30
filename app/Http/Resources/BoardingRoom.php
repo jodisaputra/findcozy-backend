@@ -20,5 +20,6 @@ class BoardingRoom extends JsonResource
             'status' => $this->status,
             'price' => $this->price,
         ];
+
     }
 }

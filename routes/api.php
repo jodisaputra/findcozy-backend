@@ -24,6 +24,7 @@ Route::prefix('auth')->group(function () {
 });
 // kost
 Route::get('boardinghouses', 'API\BoardingHouseController@index')->middleware('auth:api');
+Route::get('boardinghouses/all', 'API\BoardingHouseController@all')->middleware('auth:api');
 //kamar kost
 Route::get('boardingrooms', 'API\BoardingRoomController@index')->middleware('auth:api');
 // gambar kost
