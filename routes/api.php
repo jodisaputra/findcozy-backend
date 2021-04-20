@@ -31,8 +31,5 @@ Route::get('boardingrooms', 'API\BoardingRoomController@index')->middleware('aut
 Route::get('boardingimages', 'API\BoardingHouseImageController@index')->middleware('auth:api');
 //favourite
 Route::get('favourites', 'API\FavouriteController@index')->middleware('auth:api');
-Route::post('favourites/add', 'API\FavouriteController@store')->middleware('auth:api');
-Route::delete('favourites/{id}', 'API\FavouriteController@destroy')->middleware('auth:api');
-
 
 
